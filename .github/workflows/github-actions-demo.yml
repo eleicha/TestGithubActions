@@ -28,10 +28,19 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
-      - name: Debug directory structure
-        run: ls -R src
+          cache: maven
 
       # Step 3: Cache Maven dependencies (optional for speed)
-      - name: Run the maven verify phase
-        run: mvn --batch-mode --update-snapshots verify
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Run Tests
+        run: mvn -X clean test --file pom.xml
+
+      - name: Run Maven tests with surefire plugin
+        run: mvn clean test -Dtest=CalculatorTest
