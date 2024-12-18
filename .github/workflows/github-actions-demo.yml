@@ -29,6 +29,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Debug directory structure
+        run: ls -R src
+
       # Step 3: Cache Maven dependencies (optional for speed)
       - name: Run the maven verify phase
         run: mvn --batch-mode --update-snapshots verify
