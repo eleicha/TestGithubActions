@@ -28,7 +28,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
 
       # Step 3: Cache Maven dependencies (optional for speed)
       - name: Run the maven verify phase
